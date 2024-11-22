@@ -1,13 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sneaker 3D Configurator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <nav class="navbar">
+      <div class="logo">
+        <a href="#">MySneakerShop</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#shop">Shop</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="cart">
+          <a href="#cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+        </li>
+      </ul>
+    </nav>
+  <div class="configurator-container">
+    <div class="configurator-panel">
+      <h3>Color Customization</h3>
+      <label for="laces-color">Laces Color</label>
+      <input type="color" id="laces-color" name="laces-color" value="#ffffff">
+      
+      <label for="inside-color">Inside Color</label>
+      <input type="color" id="inside-color" name="inside-color" value="#ffffff">
+      
+      <label for="outside1 color">Outside 1 Color</label>
+      <input type="color" id="outside1 color" name="outside1-color" value="#ffffff">
+      
+      <h3>Material Options</h3>
+      <label for="laces-material">Laces Material</label>
+      <select id="laces-material">
+        <option value="cloth">Cloth</option>
+        <option value="leather">Leather</option>
+        <option value="synthetic">Synthetic</option>
+      </select>
+      
+      <label for="sole-material">Inside Material</label>
+      <select id="sole-material">
+        <option value="rubber">Rubber</option>
+        <option value="foam">Foam</option>
+        <option value="leather">Leather</option>
+      </select>
+
+      <label for="upper-material">Outside Material</label>
+      <select id="upper-material">
+        <option value="mesh">Mesh</option>
+        <option value="knit">Knit</option>
+        <option value="leather">Leather</option>
+      </select>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
 </html>
