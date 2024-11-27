@@ -40,7 +40,7 @@ h1 {
   padding: 20px;
   border-radius: 8px;
   width: 300px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px RGB(100, 242, 67);
   pointer-events: all; /* Enable interaction with the UI elements */
 }
 
@@ -90,7 +90,7 @@ select {
   top: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px RGB(100, 242, 67);
 }
 
 /* Logo */
@@ -119,7 +119,7 @@ select {
 }
 
 .nav-links a:hover {
-  color: #ff6f61;
+  color: RGB(100, 242, 67);
 }
 
 /* Winkelwagenstijl */

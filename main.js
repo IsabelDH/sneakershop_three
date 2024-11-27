@@ -22,7 +22,7 @@ controls.enableDamping = true;
 const gui = new dat.GUI();
 
 const color = {color: 0xffffff};
-let laces, inside, outside1;
+let laces, inside, outside_1, outside_2, outside_3, sole_bottom, sole_top;
 
 gui.addColor(color, 'color').onChange(() => {
   if (laces) {
@@ -39,9 +39,33 @@ gui.addColor(color, 'color').onChange(() => {
 });
 
 gui.addColor(color, 'color').onChange(() => {
-  if (outside1) {
-    outside1.material.color.set(color.color);
-    outside1.material.needsUpdate = true;
+  if (outside_1) {
+    outside_1.material.color.set(color.color);
+    outside_1.material.needsUpdate = true;
+  }
+});
+gui.addColor(color, 'color').onChange(() => {
+  if (outside_2) {
+    outside_2.material.color.set(color.color);
+    outside_2.material.needsUpdate = true;
+  }
+});
+gui.addColor(color, 'color').onChange(() => {
+  if (outside_3) {
+    outside_3.material.color.set(color.color);
+    outside_3.material.needsUpdate = true;
+  }
+});
+gui.addColor(color, 'color').onChange(() => {
+  if (sole_bottom) {
+    sole_bottom.material.color.set(color.color);
+    sole_bottom.material.needsUpdate = true;
+  }
+}); 
+gui.addColor(color, 'color').onChange(() => {
+  if (sole_top) {
+    sole_top.material.color.set(color.color);
+    sole_top.material.needsUpdate = true;
   }
 });
 
@@ -102,7 +126,27 @@ loader.load('./models/shoe.glb', (gltf) => {
       console.log(child.name);
       inside = child;
     }
-    if (child.isMesh && child.name === 'outside1') {
+    if (child.isMesh && child.name === 'outside_1') {
+      console.log(child.name);
+      outside1= child;
+    
+    }
+    if (child.isMesh && child.name === 'outside_2') {
+      console.log(child.name);
+      outside1= child;
+    
+    }
+    if (child.isMesh && child.name === 'outside_3') {
+      console.log(child.name);
+      outside1= child;
+    
+    }
+    if (child.isMesh && child.name === 'sole_bottom') {
+      console.log(child.name);
+      outside1= child;
+    
+    }
+    if (child.isMesh && child.name === 'sole_top') {
       console.log(child.name);
       outside1= child;
     
@@ -138,8 +182,36 @@ document.getElementById('inside-color').addEventListener('input', (e) => {
 });
 
 document.getElementById('outside1-color').addEventListener('input', (e) => {
-  if (outside1) {
-    outside1.material.color.set(e.target.value); // Kleur voor de buitenkant
-    outside1.material.needsUpdate = true;
+  if (outside_1) {
+    outside_1.material.color.set(e.target.value); // Kleur voor de buitenkant
+    outside_1.material.needsUpdate = true;
+  }
+});
+
+document.getElementById('outside2-color').addEventListener('input', (e) => {
+  if (outside_2) {
+    outside_2.material.color.set(e.target.value); // Kleur voor de buitenkant
+    outside_2.material.needsUpdate = true;
+  }
+});
+
+document.getElementById('outside3-color').addEventListener('input', (e) => {
+  if (outside_3) {
+    outside_3.material.color.set(e.target.value); // Kleur voor de buitenkant
+    outside_3.material.needsUpdate = true;
+  }
+});
+
+document.getElementById('sole-bottom-color').addEventListener('input', (e) => {
+  if (sole_bottom) {
+    sole_bottom.material.color.set(e.target.value); // Kleur voor de zool
+    sole_bottom.material.needsUpdate = true;
+  }
+});
+
+document.getElementById('sole-top-color').addEventListener('input', (e) => {
+  if (sole_top) {
+    sole_top.material.color.set(e.target.value); // Kleur voor de zool
+    sole_top.material.needsUpdate = true;
   }
 });
