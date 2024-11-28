@@ -68,6 +68,21 @@ body {
   background-color: black;
 }
 
+.charms-menu {
+  position: fixed;
+  top: 60%;
+  right: 20px;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: none;
+}
+
+
 /* Stijl voor de navigatiebalk */
 .navbar {
   display: flex;

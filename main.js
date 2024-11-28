@@ -116,6 +116,27 @@ loader.load('./models/shoe.glb', (gltf) => {
   );
 });
 
+let charms = [];
+let charm1, charm2;
+const charmLoader = new GLTFLoader();
+
+charmLoader.load('./models/foodie_charm_pizza/charm1.gltf', (gltf) => {
+  charm1 = gltf.scene;
+  charm1.scale.set(1,1,1);
+  charm1.visible = false;
+  scene.add(charm1);
+  charms.push(charm1);
+});
+
+charmLoader.load('./models/auspicious_charm/charm2.gltf', (gltf) => {
+  charm2 = gltf.scene;
+  charm2.scale.set(0.005,0.005,0.005);
+  charm2.visible = false;
+  scene.add(charm2);
+  charms.push(charm2);
+}
+);
+
 //raycaster /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -160,16 +181,18 @@ function zoomToPart(part) {
 //open color menu /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function openColorMenu(part) {
   const menu = document.querySelector('.color-menu');
+  const charmsMenu = document.querySelector('.charms-menu');
   console.log('openColorMenu called'); // Debug-lijn
   console.log(menu); // Controleer of menu correct wordt gevonden
 
-  if (!menu) {
+  if (!menu || !charmsMenu) {
     console.error('No color menu found');
     return;
   }
 
   selectedPart = part;
   menu.style.display = 'block';
+  charmsMenu.style.display = 'block';
   console.log('Menu display set to block');
 
   menu.querySelectorAll('a').forEach((a) => {
@@ -192,7 +215,6 @@ function openColorMenu(part) {
     img.addEventListener('click', newListener);
   });
 }
-
 
 //change color of a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function changeColor(part, color) {
@@ -218,8 +240,6 @@ function changeTexture(part, textureName) {
   }
 }
 
-
-
 //close color menu /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
@@ -231,6 +251,48 @@ document.addEventListener('keydown', (e) => {
     menu.style.display = 'none';
   }
 });
+
+//change charm /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function attachCharmToShoe(charm, position) {
+  // Zorg ervoor dat het charm zichtbaar is
+  charm.visible = true;
+
+  // Plaats de charm op een specifieke positie (x, y, z)
+  const anchorPoints = {
+    top: new THREE.Vector3(-11, 3.5, 3.5), // Top van de schoen
+    side: new THREE.Vector3(-9, 2.5, 2.5), // Zijkant
+    front: new THREE.Vector3(0, -2, 5), // Voorkant
+  };
+
+  const targetPosition = anchorPoints[position];
+  if (targetPosition) {
+    charm.position.copy(targetPosition);
+  } else {
+    console.warn('Onbekende positie:', position);
+  }
+}
+
+document.querySelectorAll('.charms-menu button').forEach((button) => {
+  button.addEventListener('click', () => {
+    const charmName = button.dataset.charm;
+
+    if (charmName === 'charm1' && charm1) {
+      attachCharmToShoe(charm1, 'top'); // Plaats charm 1 aan de bovenkant
+    } else if (charmName === 'charm2' && charm2) {
+      attachCharmToShoe(charm2, 'side'); // Plaats charm 2 aan de zijkant
+    }
+  });
+});
+
+function removeCharm(charm) {
+  if (charm) {
+    charm.visible = false; // Verberg charm
+  }
+}
+
+
+
+
 
 // Animation Loop /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function animate() {
