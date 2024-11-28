@@ -58,7 +58,7 @@ dracoLoader.setDecoderPath('./draco/');
 
 //background /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sphereGeometry = new THREE.SphereGeometry(40, 50, 30);
-const spherematerial = new THREE.MeshBasicMaterial({ map: envMap, side: THREE.DoubleSide });
+const spherematerial = new THREE.MeshBasicMaterial({ map: texture360, side: THREE.DoubleSide });
 const sphere = new THREE.Mesh(sphereGeometry, spherematerial);
 scene.add(sphere);
 
