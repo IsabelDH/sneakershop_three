@@ -3,7 +3,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import gsap from 'gsap';
 import { DRACOLoader } from 'three/examples/jsm/Addons.js';
-import * as dat from 'dat.gui';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -17,57 +16,6 @@ document.body.appendChild(renderer.domElement);
 //orbit controls /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-
-//dat.gui /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-const gui = new dat.GUI();
-
-const color = {color: 0xffffff};
-let laces, inside, outside_1, outside_2, outside_3, sole_bottom, sole_top;
-
-gui.addColor(color, 'color').onChange(() => {
-  if (laces) {
-    laces.material.color.set(color.color);
-    laces.material.needsUpdate = true;
-  }
-});
-
-gui.addColor(color, 'color').onChange(() => {
-  if (inside) {
-    inside.material.color.set(color.color);
-    inside.material.needsUpdate = true;
-  }
-});
-
-gui.addColor(color, 'color').onChange(() => {
-  if (outside_1) {
-    outside_1.material.color.set(color.color);
-    outside_1.material.needsUpdate = true;
-  }
-});
-gui.addColor(color, 'color').onChange(() => {
-  if (outside_2) {
-    outside_2.material.color.set(color.color);
-    outside_2.material.needsUpdate = true;
-  }
-});
-gui.addColor(color, 'color').onChange(() => {
-  if (outside_3) {
-    outside_3.material.color.set(color.color);
-    outside_3.material.needsUpdate = true;
-  }
-});
-gui.addColor(color, 'color').onChange(() => {
-  if (sole_bottom) {
-    sole_bottom.material.color.set(color.color);
-    sole_bottom.material.needsUpdate = true;
-  }
-}); 
-gui.addColor(color, 'color').onChange(() => {
-  if (sole_top) {
-    sole_top.material.color.set(color.color);
-    sole_top.material.needsUpdate = true;
-  }
-});
 
 //light /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const light = new THREE.AmbientLight(0xffffff, 1);
