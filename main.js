@@ -207,15 +207,19 @@ function openColorMenu(part) {
     return;
   }
 
+  selectedPart = part;
   menu.style.display = 'block';
-  console.log('Menu display set to block'); // Debug-lijn
+  console.log('Menu display set to block');
 
   menu.querySelectorAll('a').forEach((a) => {
-    a.addEventListener('click', () => {
-      changeColor(part, a.dataset.color);
-      menu.style.display = 'none'; // Sluit het menu
+    const newListener = () => {
+      changeColor(selectedPart, a.dataset.color);
+      menu.style.display = 'none';
+    }
+
+    a.removeEventListener('click', newListener);
+    a.addEventListener('click', newListener);
     });
-  });
 }
 
 
