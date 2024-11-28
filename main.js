@@ -73,6 +73,10 @@ gui.addColor(color, 'color').onChange(() => {
 const light = new THREE.AmbientLight(0xffffff, 1);
 scene.add(light);
 
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(10, 10, 10);
+scene.add(directionalLight);
+
 //camera /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 camera.position.z = 30;
 
@@ -91,13 +95,22 @@ const envMap = cubeTextureLoader.load([
 ]);
 scene.environment = envMap;
 
+const texture1 = textureLoader.load('./textures/texture_1.png', () =>{
+  console.log('texture1 loaded');
+}, undefined, (error) => {
+  console.error(error);
+});
+const texture2 = textureLoader.load('./textures/texture_2.png', () =>{
+  console.log('texture2 loaded');
+});
+
 //Draco loader /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('./draco/');
 
 //background /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sphereGeometry = new THREE.SphereGeometry(40, 50, 30);
-const spherematerial = new THREE.MeshBasicMaterial({ map: texture360, side: THREE.DoubleSide });
+const spherematerial = new THREE.MeshBasicMaterial({ map: envMap, side: THREE.DoubleSide });
 const sphere = new THREE.Mesh(sphereGeometry, spherematerial);
 scene.add(sphere);
 
@@ -220,6 +233,16 @@ function openColorMenu(part) {
     a.removeEventListener('click', newListener);
     a.addEventListener('click', newListener);
     });
+
+  menu.querySelectorAll('.texture-option').forEach((img) => {
+    const newListener = () => {
+      changeTexture(selectedPart, img.dataset.texture);
+      menu.style.display = 'none';
+    }
+
+    img.removeEventListener('click', newListener);
+    img.addEventListener('click', newListener);
+  });
 }
 
 
@@ -228,6 +251,26 @@ function changeColor(part, color) {
   part.material.color.set(color);
   part.material.needsUpdate = true;
 }
+
+//change texture of a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function changeTexture(part, textureName) {
+  let texture;
+
+  // Kies de juiste textuur
+  if (textureName === 'texture1') {
+    texture = texture1;
+  } else if (textureName === 'texture2') {
+    texture = texture2;
+  }
+
+  if (texture) {
+    // Alleen de textuur wijzigen
+    part.material.map = texture;
+    part.material.needsUpdate = true;
+  }
+}
+
+
 
 //close color menu /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 document.addEventListener('keydown', (e) => {
