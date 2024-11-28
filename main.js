@@ -290,9 +290,16 @@ function removeCharm(charm) {
   }
 }
 
-
-
-
+let order = document.querySelector('.order');
+  order.addEventListener('click', () => {
+    gsap.to(order, {
+        scale: 1.4,
+        backgroundColor: 'hsl(+=360, 100%, 50%)',
+        duration: 0.5,
+        yoyo: true,
+        repeat: 1,
+    });
+ });
 
 // Animation Loop /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function animate() {
