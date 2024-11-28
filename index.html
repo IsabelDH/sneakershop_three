@@ -3,45 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sneaker 3D Configurator</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Webshop</title>
+  <link rel="stylesheet" href="shop.css">
 </head>
 <body>
-  
+  <!-- Navigatiebalk -->
   <nav class="navbar">
-      <div class="logo">
-        <a href="#">MySneakerShop</a>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#shop">Shop</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="cart">
-          <a href="#cart"><i class="fas fa-shopping-cart"></i> Cart</a>
-        </li>
-      </ul>
-    </nav>
-
-    <div class="color-menu">
-      <h3>Select Color</h3>
-      <a href="#" data-color="green"></a>
-      <a href="#" data-color="yellow"></a>
-      <a href="#" data-color="red"></a>
-      <a href="#" data-color="black"></a>
-
-      <h3>Select Texture</h3>
-      <img src="./public/textures/texture_1.png" class="texture-option" data-texture="texture1">
-      <img src="./public/textures/texture_2.png" class="texture-option" data-texture="texture2">
-
-      <h3>Select charms</h3>
-      <div class="charms-menu">
-        <button data-charm="charm1">Add Charm 1</button>
-        <button data-charm="charm2">Add Charm 2</button>
-      </div>
-      <button onclick="removeCharm(charm1)">Remove Charm 1</button>
-
+    <div class="logo">
+      <a href="#">Swear</a>
     </div>
-    
-  <script type="module" src="main.js"></script>
+    <ul class="nav-links">
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Vault</a></li>
+      <li><a href="#">Journal</a></li>
+      <li><a href="#">Sustainability</a></li>
+    </ul>
+    <div class="nav-icons">
+      <i class="fas fa-search"></i>
+      <i class="fas fa-user"></i>
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+  </nav>
+
+  <!-- Schoenenoverzicht -->
+  <section class="product-overview">
+    <h1>Discover Our Collection</h1>
+    <div class="product-grid">
+      <!-- Product Kaarten -->
+      <div class="product-card" onclick="goToConfigurator()">
+        <img src="/images/stock_shoe.png" alt="Shoe 1">
+        <h2>Shoe Model 1</h2>
+        <p>€100</p>
+      </div>
+      <div class="product-card" onclick="goToConfigurator()">
+        <img src="/images/stock_shoe.png" alt="Shoe 2">
+        <h2>Shoe Model 2</h2>
+        <p>€120</p>
+      </div>
+      <div class="product-card" onclick="goToConfigurator()">
+        <img src="/images/stock_shoe.png" alt="Shoe 3">
+        <h2>Shoe Model 3</h2>
+        <p>€90</p>
+      </div>
+      <div class="product-card" onclick="goToConfigurator()">
+        <img src="/images/stock_shoe.png" alt="Shoe 4">
+        <h2>Shoe Model 4</h2>
+        <p>€110</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Functie om door te verwijzen naar configurator
+    function goToConfigurator() {
+      window.location.href = 'configurator.html';
+    }
+  </script>
 </body>
 </html>
