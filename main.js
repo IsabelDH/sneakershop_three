@@ -30,7 +30,7 @@ camera.position.z = 30;
 
 //texture /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const textureLoader = new THREE.TextureLoader();
-const texture360 = textureLoader.load('./textures/360.png');
+const texture360 = textureLoader.load('./textures/image.png');
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 const envMap = cubeTextureLoader.load([
