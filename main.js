@@ -11,7 +11,7 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
-
+renderer.setPixelRatio(1);
 
 //orbit controls /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -69,10 +69,11 @@ loader.setDRACOLoader(dracoLoader);
 
 let shoe;
 loader.load('./models/shoe.glb', (gltf) => {
+  console.log('Load')
   shoe = gltf.scene;
   scene.add(shoe);
   shoe.position.x = -10;
-  shoe.scale.set(55, 55, 55);
+  shoe.scale.set(20, 20, 20);
   shoe.rotation.y = Math.PI / 2;
 
   shoe.traverse((child) => {
@@ -305,9 +306,10 @@ let order = document.querySelector('.order');
 function animate() {
   controls.update();
   renderer.render(scene, camera);
-  requestAnimationFrame(animate);
+
+  renderer.setAnimationLoop(animate);
 }
 
-animate();
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
