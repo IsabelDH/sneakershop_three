@@ -331,6 +331,15 @@ document.querySelector('.remove-charm').addEventListener('click', () => {
   }
 });
 
+//shoe size /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+let shoeSize = null;
+
+const shoeSizeSelect = document.querySelector('#shoe-size');
+shoeSizeSelect.addEventListener('change', (event) => {
+  shoeSize = event.target.value;  // Verkrijg de geselecteerde maat
+  currentConfig.size = shoeSize;  // Update de currentConfig met de maat
+  console.log(`Shoe size selected: ${shoeSize}`);
+});
 
 // Generate order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentConfig = {
@@ -338,10 +347,10 @@ let currentConfig = {
   colors: {}, // Houd kleurinstellingen bij
   textures: {}, // Houd textuurinstellingen bij
   charms: [], // Houd charms bij
+  size: null, // Houd de maat bij
 };
 
 //create order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 let orderButton = document.querySelector('.order');
 orderButton.addEventListener('click', async () => {
     const user = "John Doe"; // Vervang door gebruikersinformatie
@@ -352,6 +361,7 @@ orderButton.addEventListener('click', async () => {
         user,
         email,
         address,
+        size: currentConfig.size,
         order: [
             ...Object.keys(currentConfig.colors).map(partName => ({
                 productId: partName,
