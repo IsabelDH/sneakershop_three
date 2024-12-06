@@ -29,24 +29,19 @@ camera.position.z = 30;
 const textureLoader = new THREE.TextureLoader();
 const texture360 = textureLoader.load('./textures/image.png');
 
-const cubeTextureLoader = new THREE.CubeTextureLoader();
-const envMap = cubeTextureLoader.load([
-  '/envmap/nX.PNG',
-	'/envmap/nY.PNG',
-	'/envmap/nZ.PNG',
-	'/envmap/pX.PNG',
-	'/envmap/pY.PNG',
-	'/envmap/pZ.PNG',
-]);
-scene.environment = envMap;
-
 const texture1 = textureLoader.load('./textures/texture_1.png', () =>{
   console.log('texture1 loaded');
+  texture1.wrapS = THREE.RepeatWrapping;
+  texture1.wrapT = THREE.RepeatWrapping;
+  texture1.repeat.set(2, 2);
 }, undefined, (error) => {
   console.error(error);
 });
 const texture2 = textureLoader.load('./textures/texture_2.png', () =>{
   console.log('texture2 loaded');
+  texture2.wrapS = THREE.RepeatWrapping;
+  texture2.wrapT = THREE.RepeatWrapping;
+  texture2.repeat.set(2, 2);
 });
 
 //Draco loader /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
