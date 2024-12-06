@@ -2,6 +2,7 @@ const API_BASE_URL = 'https://sneakershop-6lmk.onrender.com/api/orders'; // Pas 
 
 export async function createOrder(orderData) {
     try {
+        console.log('Sending order data to API:', orderData);
         const response = await fetch(API_BASE_URL, {
             method: 'POST',
             headers: {
@@ -10,11 +11,16 @@ export async function createOrder(orderData) {
             body: JSON.stringify(orderData),
         });
 
+        console.log('Response status:', response.status);
+
         if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error creating order:', errorData);
             throw new Error(`Error: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('Response data:', data); 
         return data;
     } catch (error) {
         console.error('Error creating order:', error);

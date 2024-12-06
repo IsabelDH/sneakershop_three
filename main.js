@@ -351,34 +351,59 @@ let currentConfig = {
 };
 
 //create order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let orderButton = document.querySelector('.order');
-orderButton.addEventListener('click', async () => {
+// Selecteer de knoppen en het formulier
+const orderButton = document.querySelector('.order');
+const orderForm = document.querySelector('#order-form');
+
+// Toon het formulier als op 'Order' wordt geklikt
+orderButton.addEventListener('click', (event) => {
+  event.preventDefault(); // Voorkom dat de pagina opnieuw laadt
+
+  // Zorg ervoor dat het formulier zichtbaar wordt
+  orderForm.style.display = 'flex';
+});
+
+// Verzend de order wanneer het formulier wordt ingediend
+document.querySelector('#order-form').addEventListener('submit', async (event) => {
+  event.preventDefault(); // Voorkom dat de pagina opnieuw laadt
+
+  const user = document.querySelector('#user-name').value;
+  const email = document.querySelector('#user-email').value;
+  const address = document.querySelector('#user-address').value;
+
+  if (!user || !email || !address) {
+    alert('Vul alstublieft alle velden in!');
+    return;
+  }
+
+  // Verzend de order
+  const orderData = {
+    user,
+    email,
+    address,
+    size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
+    order: [
+      ...Object.keys(currentConfig.colors).map(partName => ({
+        productId: partName,
+        size: currentConfig.colors[partName], // Of een andere representatie
+        quantity: 1,
+      })),
+    ],
+  };
+
+  console.log('Preparing to send order data:', orderData);
+
   try {
-      const userData = await getUser();
-
-      const orderData = {
-          user: userData.name, 
-          email: userData.email,  
-          address: userData.address,  
-          size: shoeSize,  
-          order: [
-              ...Object.keys(currentConfig.colors).map(partName => ({
-                  productId: partName, 
-                  color: currentConfig.colors[partName],  
-                  size: currentConfig.size,  
-                  quantity: 1,
-              })),
-          ],
-      };
-
-      // Maak de bestelling aan via de API
-      const response = await createOrder(orderData);
-      console.log('Order geplaatst:', response);
-      alert('Uw bestelling is succesvol geplaatst!');
+    const response = await createOrder(orderData);
+    console.log('Order placed:', response);
+    alert('Uw bestelling is succesvol geplaatst!');
+    orderForm.style.display = 'none'; // Verberg het formulier na succesvolle bestelling
   } catch (error) {
-      alert('Er ging iets mis bij het plaatsen van uw bestelling.');
+    console.error('Error placing order:', error);
+    alert('Er ging iets mis bij het plaatsen van uw bestelling.');
   }
 });
+
 
 // Animation Loop /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function animate() {
