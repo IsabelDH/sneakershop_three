@@ -22,10 +22,6 @@ controls.enableDamping = true;
 const light = new THREE.AmbientLight(0xffffff, 1);
 scene.add(light);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 10, 10);
-scene.add(directionalLight);
-
 //camera /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 camera.position.z = 30;
 
@@ -72,8 +68,9 @@ loader.load('./models/shoe.glb', (gltf) => {
   console.log('Load')
   shoe = gltf.scene;
   scene.add(shoe);
-  shoe.scale.set(20, 20, 20);
+  shoe.scale.set(55, 55, 55);
   shoe.rotation.y = Math.PI / 2;
+  shoe.updateMatrixWorld(true); // Update de wereldmatrix van de schoen voor de raycaster
 
   shoe.traverse((child) => {
     if (child.isMesh && child.name === 'laces') {
