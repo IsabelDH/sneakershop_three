@@ -133,6 +133,51 @@ charmLoader.load('./models/auspicious_charm/charm2.gltf', (gltf) => {
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 let selectedPart = null;
+let highlightedPart = null;
+
+//mouse move on a shoe child, highlight that child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+window.addEventListener('mousemove', (event) => {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  let intersectableObjects = [];
+  shoe.traverse((child) => {
+    if (child.isMesh) {
+      intersectableObjects.push(child);
+    }
+  });
+
+  const intersects = raycaster.intersectObjects(intersectableObjects, true);
+
+  if (intersects.length > 0) {
+    const intersectedPart = intersects[0].object;
+
+    if (highlightedPart !== intersectedPart) {
+      if (highlightedPart) {
+        resetHighlight(highlightedPart);
+      }
+
+      highlightObject(intersectedPart);
+      highlightedPart = intersectedPart;
+    }
+  } else {
+    if (highlightedPart) {
+      resetHighlight(highlightedPart);
+      highlightedPart = null;
+    }
+  }
+});
+
+function highlightObject(object) {
+  object.material.emissive.set(0xaaaaaa); 
+  object.material.emissiveIntensity = 0.5; 
+}
+function resetHighlight(object) {
+  object.material.emissive.set(0x000000); 
+  object.material.emissiveIntensity = 0; 
+}
 
 //mouse click on a shoe child, zoom in on that child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('click', (e) => {
@@ -271,28 +316,21 @@ document.querySelectorAll('.charms-menu button').forEach((button) => {
 function removeCharmFromShoe(charm) {
   charm.visible = false;
   currentConfig.charms = currentConfig.charms.filter(({ name }) => name !== charm.name);
+  console.log(`${charm.name} is verwijderd!`);
 }
 
 document.querySelector('.remove-charm').addEventListener('click', () => {
   if (currentConfig.charms.length > 0) {
-      const lastCharm = currentConfig.charms.pop();
-      const charm = charms.find(({ name }) => name === lastCharm.name);
-      removeCharmFromShoe(charm);
+    const lastCharm = currentConfig.charms.pop();
+    const charmToRemove = charms.find(({ name }) => name === lastCharm.name);
+    if (charmToRemove) {
+      removeCharmFromShoe(charmToRemove);
+    }
+  } else {
+    console.log('Er zijn geen charms om te verwijderen.');
   }
-}
-);
+});
 
-//order button /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let order = document.querySelector('.order');
-  order.addEventListener('click', () => {
-    gsap.to(order, {
-        scale: 1.4,
-        backgroundColor: 'hsl(+=360, 100%, 50%)',
-        duration: 0.5,
-        yoyo: true,
-        repeat: 1,
-    });
- });
 
 // Generate order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentConfig = {
