@@ -14,18 +14,18 @@ renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 renderer.setPixelRatio(1);
 
-//orbit controls /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//orbit controls /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 
-//light /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//light /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const light = new THREE.AmbientLight(0xffffff, 1);
 scene.add(light);
 
-//camera /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//camera ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 camera.position.z = 30;
 
-//texture /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//texture ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const textureLoader = new THREE.TextureLoader();
 const texture360 = textureLoader.load('./textures/image.png');
 
@@ -145,19 +145,23 @@ window.addEventListener('click', (e) => {
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(shoe.children, true);
 
-  console.log('Click detected:', intersects.length, 'intersects'); // Debug-lijn
+  // Gebruik traverse om kinderen van de schoen te vinden
+  let intersectableObjects = [];
+  shoe.traverse((child) => {
+    if (child.isMesh) {
+      intersectableObjects.push(child);
+    }
+  });
+
+  const intersects = raycaster.intersectObjects(intersectableObjects, true);
 
   if (intersects.length > 0) {
     const intersectedPart = intersects[0].object;
-    console.log('Intersected part:', intersectedPart.name); // Debug-lijn
-
     zoomToPart(intersectedPart);
     openColorMenu(intersectedPart);
   }
 });
-
 
 //zoom in on a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function zoomToPart(part) {
@@ -176,42 +180,40 @@ function zoomToPart(part) {
 }
 
 //open color menu /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+let menuVisible = false; // Variabele om de zichtbaarheid van het menu bij te houden
+
 function openColorMenu(part) {
   const menu = document.querySelector('.color-menu');
-  const charmsMenu = document.querySelector('.charms-menu');
-  console.log('openColorMenu called'); // Debug-lijn
-  console.log(menu); // Controleer of menu correct wordt gevonden
 
-  if (!menu || !charmsMenu) {
+  if (!menu) {
     console.error('No color menu found');
     return;
   }
 
+  // Controleer of het menu al zichtbaar is
+  if (!menuVisible) {
+    menu.style.display = 'block';
+    menuVisible = true; // Menu is nu zichtbaar, bijgewerkte status
+    console.log('Menu set to visible');
+  }
+
   selectedPart = part;
-  menu.style.display = 'block';
-  charmsMenu.style.display = 'block';
-  console.log('Menu display set to block');
 
+  // Voeg event listeners toe voor de kleuren
   menu.querySelectorAll('a').forEach((a) => {
-    const newListener = () => {
+    a.addEventListener('click', () => {
       changeColor(selectedPart, a.dataset.color);
-      menu.style.display = 'none';
-    }
-
-    a.removeEventListener('click', newListener);
-    a.addEventListener('click', newListener);
     });
+  });
 
+  // Voeg event listeners toe voor de texturen
   menu.querySelectorAll('.texture-option').forEach((img) => {
-    const newListener = () => {
+    img.addEventListener('click', () => {
       changeTexture(selectedPart, img.dataset.texture);
-      menu.style.display = 'none';
-    }
-
-    img.removeEventListener('click', newListener);
-    img.addEventListener('click', newListener);
+    });
   });
 }
+
 
 //change color of a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function changeColor(part, color) {
@@ -238,28 +240,16 @@ function changeTexture(part, textureName) {
     part.material.map = texture;
     part.material.needsUpdate = true;
     currentConfig.textures[part.name] = textureName;
-}
-}
-
-//close color menu /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    gsap.to(camera.position, { x: 0, y: 0, z: 30, duration: 1 });
-    controls.target.set(0, 0, 0);
-    selectedPart = null;
-
-    const menu = document.querySelector('.color-menu');
-    menu.style.display = 'none';
   }
-});
+}
 
 //change charm /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function attachCharmToShoe(charm, position) {
   charm.visible = true;
 
   const anchorPoints = {
-      top: new THREE.Vector3(-11, 3.5, 3.5),
-      side: new THREE.Vector3(-9, 2.5, 2.5),
+      top: new THREE.Vector3(-1, 3.5, 3.5),
+      side: new THREE.Vector3(0.75, 2, 3),
       front: new THREE.Vector3(0, -2, 5),
   };
 
@@ -282,12 +272,22 @@ document.querySelectorAll('.charms-menu button').forEach((button) => {
   });
 });
 
-function removeCharm(charm) {
-  if (charm) {
-    charm.visible = false; // Verberg charm
-  }
+//function remove charm /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function removeCharmFromShoe(charm) {
+  charm.visible = false;
+  currentConfig.charms = currentConfig.charms.filter(({ name }) => name !== charm.name);
 }
 
+document.querySelector('.remove-charm').addEventListener('click', () => {
+  if (currentConfig.charms.length > 0) {
+      const lastCharm = currentConfig.charms.pop();
+      const charm = charms.find(({ name }) => name === lastCharm.name);
+      removeCharmFromShoe(charm);
+  }
+}
+);
+
+//order button /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let order = document.querySelector('.order');
   order.addEventListener('click', () => {
     gsap.to(order, {
@@ -337,8 +337,6 @@ orderButton.addEventListener('click', async () => {
     }
 });
 
-
-
 // Animation Loop /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function animate() {
   controls.update();
@@ -346,7 +344,4 @@ function animate() {
 
   renderer.setAnimationLoop(animate);
 }
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -20,9 +20,12 @@
       <li><a href="#">Sustainability</a></li>
       <li class="order"><a href="#">Order</a></li>
     </ul>
-    </nav>
+  </nav>
 
-    <div class="color-menu">
+  <div class="slogan">Pick and Change!</div>
+
+  <div class="color-menu fixed-bottom">
+    <div class="menu-section">
       <h3>Select Color</h3>
       <a href="#" data-color="green"></a>
       <a href="#" data-color="yellow"></a>
@@ -37,10 +40,11 @@
       <div class="charms-menu">
         <button data-charm="charm1">Add Charm 1</button>
         <button data-charm="charm2">Add Charm 2</button>
+        <button onclick="removeCharm(charm1)">Remove Charm</button>
       </div>
-      <button onclick="removeCharm(charm1)">Remove Charm 1</button>
+      
     </div>
-
+  </div>
   <script type="module" src="main.js"></script>
 </body>
 </html>

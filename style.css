@@ -12,36 +12,65 @@ body {
   overflow: hidden;
 }
 
-/* Stijl voor color-menu */
-.color-menu {
-  display: none;
-  position: fixed;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  background: #e0e0e0;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border: 1px solid #ccc;
-  z-index: 1000;
-  text-align: center;
+.slogan {
+  position: fixed; 
+  top: 120px; /* Verplaats de tekst naar boven */
+  left: 50%; 
+  transform: translateX(-50%); /* Zorg ervoor dat het gecentreerd is */
+  font-size: 50px; 
+  font-weight: bold; 
+  color: #222; 
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  z-index: 20000; 
 }
 
-.color-menu a {
+
+/* Stijl voor color-menu */
+.color-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #222;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  border: 1px solid #6df243;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.color-menu a,
+ .texture-option {
   display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 2px solid #ccc;
+  width: 40px;
+  height: 40px;
   margin: 5px;
+  border: 2px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
   transition: border-color 0.3s ease;
 }
 
-.color-menu a:hover {
-  border-color: #6df243; /* Gebruik RGB(100, 242, 67) */
+.color-menu a:hover,
+.color-menu .texture-option:hover {
+  border-color: #6df243;
 }
+
+.color-menu .menu-section{
+  flex: 1;
+  text-align: center;
+}
+
+.color-menu h3 {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  color: #6df243;
+}
+
 
 .color-menu .texture-option {
   display: inline-block;
@@ -60,6 +89,22 @@ body {
   border-color: #6df243;
 }
 
+.color-menu button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 0.9rem;
+  color: black;
+  background: #6df243;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.color-menu button:hover {
+  background: #57c72d;
+}
+
 /* Stijl voor kleuren */
 [data-color="red"] {
   background-color: red;
@@ -75,39 +120,6 @@ body {
 
 [data-color="black"] {
   background-color: black;
-}
-
-/* Stijl voor charms-menu */
-.charms-menu {
-  position: fixed;
-  top: calc(40% + 200px);
-  right: 60px;
-  transform: translateY(-50%);
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  display: none;
-  text-align: center;
-}
-
-.charms-menu button {
-  display: block;
-  margin: 10px auto;
-  padding: 8px 15px;
-  font-size: 1rem;
-  color: #fff;
-  background: #6df243; /* Gebruik RGB(100, 242, 67) */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.charms-menu button:hover {
-  background: #57c72d;
 }
 
   /* Navigatiebalk */
@@ -181,5 +193,9 @@ body {
 
   .navbar {
     justify-content: space-between;
+  }
+
+  .color-menu {
+    flex-direction: column;
   }
 }
