@@ -21,3 +21,25 @@ export async function createOrder(orderData) {
         throw error;
     }
 }
+
+export async function getUser() {
+    try {
+        const response = await fetch('https://sneakershop-6lmk.onrender.com/api/users', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`, // JWT-token in localStorage
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data; // Retourneert de gebruikersinformatie
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+        throw error;
+    }
+}

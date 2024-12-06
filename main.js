@@ -353,31 +353,31 @@ let currentConfig = {
 //create order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let orderButton = document.querySelector('.order');
 orderButton.addEventListener('click', async () => {
-    const user = "John Doe"; // Vervang door gebruikersinformatie
-    const email = "johndoe@example.com"; // Vervang door gebruikersinformatie
-    const address = "123 Main Street"; // Vervang door gebruikersinformatie
+  try {
+      const userData = await getUser();
 
-    const orderData = {
-        user,
-        email,
-        address,
-        size: currentConfig.size,
-        order: [
-            ...Object.keys(currentConfig.colors).map(partName => ({
-                productId: partName,
-                size: currentConfig.colors[partName], // Of een andere representatie
-                quantity: 1,
-            })),
-        ],
-    };
+      const orderData = {
+          user: userData.name, 
+          email: userData.email,  
+          address: userData.address,  
+          size: shoeSize,  
+          order: [
+              ...Object.keys(currentConfig.colors).map(partName => ({
+                  productId: partName, 
+                  color: currentConfig.colors[partName],  
+                  size: currentConfig.size,  
+                  quantity: 1,
+              })),
+          ],
+      };
 
-    try {
-        const response = await createOrder(orderData);
-        console.log('Order geplaatst:', response);
-        alert('Uw bestelling is succesvol geplaatst!');
-    } catch (error) {
-        alert('Er ging iets mis bij het plaatsen van uw bestelling.');
-    }
+      // Maak de bestelling aan via de API
+      const response = await createOrder(orderData);
+      console.log('Order geplaatst:', response);
+      alert('Uw bestelling is succesvol geplaatst!');
+  } catch (error) {
+      alert('Er ging iets mis bij het plaatsen van uw bestelling.');
+  }
 });
 
 // Animation Loop /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
