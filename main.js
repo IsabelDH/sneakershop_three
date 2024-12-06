@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import gsap from 'gsap';
 import { DRACOLoader } from 'three/examples/jsm/Addons.js';
+import {createOrder} from './api.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -66,13 +67,11 @@ scene.add(sphere);
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
 
-
 let shoe;
 loader.load('./models/shoe.glb', (gltf) => {
   console.log('Load')
   shoe = gltf.scene;
   scene.add(shoe);
-  shoe.position.x = -10;
   shoe.scale.set(20, 20, 20);
   shoe.rotation.y = Math.PI / 2;
 
@@ -221,6 +220,10 @@ function openColorMenu(part) {
 function changeColor(part, color) {
   part.material.color.set(color);
   part.material.needsUpdate = true;
+
+  if (currentConfig) {
+    currentConfig.colors[part.name] = color;
+  }
 }
 
 //change texture of a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,10 +238,10 @@ function changeTexture(part, textureName) {
   }
 
   if (texture) {
-    // Alleen de textuur wijzigen
     part.material.map = texture;
     part.material.needsUpdate = true;
-  }
+    currentConfig.textures[part.name] = textureName;
+}
 }
 
 //close color menu /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -255,21 +258,18 @@ document.addEventListener('keydown', (e) => {
 
 //change charm /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function attachCharmToShoe(charm, position) {
-  // Zorg ervoor dat het charm zichtbaar is
   charm.visible = true;
 
-  // Plaats de charm op een specifieke positie (x, y, z)
   const anchorPoints = {
-    top: new THREE.Vector3(-11, 3.5, 3.5), // Top van de schoen
-    side: new THREE.Vector3(-9, 2.5, 2.5), // Zijkant
-    front: new THREE.Vector3(0, -2, 5), // Voorkant
+      top: new THREE.Vector3(-11, 3.5, 3.5),
+      side: new THREE.Vector3(-9, 2.5, 2.5),
+      front: new THREE.Vector3(0, -2, 5),
   };
 
   const targetPosition = anchorPoints[position];
   if (targetPosition) {
-    charm.position.copy(targetPosition);
-  } else {
-    console.warn('Onbekende positie:', position);
+      charm.position.copy(targetPosition);
+      currentConfig.charms.push({ name: charm.name, position });
   }
 }
 
@@ -301,6 +301,46 @@ let order = document.querySelector('.order');
         repeat: 1,
     });
  });
+
+// Generate order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+let currentConfig = {
+  selectedPart: null,
+  colors: {}, // Houd kleurinstellingen bij
+  textures: {}, // Houd textuurinstellingen bij
+  charms: [], // Houd charms bij
+};
+
+//create order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+let orderButton = document.querySelector('.order');
+orderButton.addEventListener('click', async () => {
+    const user = "John Doe"; // Vervang door gebruikersinformatie
+    const email = "johndoe@example.com"; // Vervang door gebruikersinformatie
+    const address = "123 Main Street"; // Vervang door gebruikersinformatie
+
+    const orderData = {
+        user,
+        email,
+        address,
+        order: [
+            ...Object.keys(currentConfig.colors).map(partName => ({
+                productId: partName,
+                size: currentConfig.colors[partName], // Of een andere representatie
+                quantity: 1,
+            })),
+        ],
+    };
+
+    try {
+        const response = await createOrder(orderData);
+        console.log('Order geplaatst:', response);
+        alert('Uw bestelling is succesvol geplaatst!');
+    } catch (error) {
+        alert('Er ging iets mis bij het plaatsen van uw bestelling.');
+    }
+});
+
+
 
 // Animation Loop /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function animate() {
