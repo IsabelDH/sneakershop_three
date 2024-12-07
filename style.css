@@ -14,15 +14,26 @@ body {
 
 .slogan {
   position: fixed; 
-  top: 120px; /* Verplaats de tekst naar boven */
-  left: 50%; 
+  top: 80px; /* Verplaats de tekst naar boven */
+  left: 25%; 
   transform: translateX(-50%); /* Zorg ervoor dat het gecentreerd is */
   font-size: 50px; 
   font-weight: bold; 
-  color: #222; 
+  color: #dde8d9; 
+  text-align: center;
+  padding: 20px;
+  border: solid 2px;
+  background-color: #202020;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   z-index: 20000; 
+  border-color: #6df243;
+  font-size: 32px;
+  
 }
+img{
+  width: 80%;
+}
+
 
 /* Stijl voor het formulier dat in het midden van het scherm verschijnt */
 .order-form {
@@ -183,6 +194,7 @@ body {
 }
 
   /* Navigatiebalk */
+
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -195,19 +207,17 @@ body {
     z-index: 1000;
     box-shadow: 0 4px 8px #6df243;
   }
-  
-  .navbar .logo a {
+   .navbar .logo a {
     font-size: 1.5rem;
     color: #fff;
     text-decoration: none;
   }
-  
   .nav-links {
     list-style: none;
     display: flex;
     gap: 15px;
   }
-  
+   
   .nav-links a {
     text-decoration: none;
     color: #fff;
@@ -245,6 +255,7 @@ body {
   background-color: #218838;
 }
 
+
 /* Mobiele weergave /////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 @media (max-width: 768px) {
   .nav-links {
@@ -257,5 +268,86 @@ body {
 
   .color-menu {
     flex-direction: column;
+  }
+/* Make the hamburger icon visible in mobile view */
+.hamburger {
+  display: block;
+  font-size: 30px;
+  cursor: pointer;
+  color: #cecfd1;
+}
+
+/* Hide the nav-links by default on mobile */
+.nav-links {
+  list-style: none;
+  display: none; /* Hide menu initially */
+  position: absolute;
+  top: 65px; 
+  left: 320px;
+  width: 40%;
+  background-color: #222;
+  padding: 10px;
+  z-index: 999;
+  box-shadow: 0 4px 8px #6df243;
+}
+
+/* Display the menu when active */
+.nav-links.active {
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;
+  align-items: center;
+}
+
+.hamburger {
+  display: block;
+}
+
+.close-menu {
+  display: none;
+}
+
+.nav-links.active {
+  right: 0; 
+}
+.nav-links.active ~ .close-menu {
+  display: block;
+}
+
+
+.close-menu {
+  display: none; 
+  font-size: 40px;
+  cursor: pointer;
+  color: #cecfd1;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+
+}
+
+.nav-links.active ~ .close-menu {
+  display: block;
+}
+
+.navbar {
+  padding: 10px 15px;
+}
+
+.slogan {
+  margin-left: 50px;  
+  margin-right: 0; 
+  font-size: 35px; 
+}
+
+}
+@media (min-width: 768px) {
+  .hamburger, .close-menu {
+    display: none !important;
+  }
+}
+@media (min-width: 1040px) {
+  .hamburger, .close-menu {
+    display: none !important;
   }
 }

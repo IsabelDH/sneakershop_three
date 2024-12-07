@@ -14,6 +14,7 @@
   }
   
   /* Navigatiebalk */
+  
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -26,19 +27,17 @@
     z-index: 1000;
     box-shadow: 0 4px 8px #6df243;
   }
-  
-  .navbar .logo a {
+   .navbar .logo a {
     font-size: 1.5rem;
     color: #fff;
     text-decoration: none;
   }
-  
   .nav-links {
     list-style: none;
     display: flex;
     gap: 15px;
   }
-  
+   
   .nav-links a {
     text-decoration: none;
     color: #fff;
@@ -52,12 +51,15 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
-  
+
+  img{
+  width: 80%;
+}
   /* Productoverzicht */
   .product-overview {
     padding: 20px;
     text-align: center;
+    z-index: 550000;
   }
   
   .product-overview h1 {
@@ -102,4 +104,102 @@
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
+ 
+
+  /* Mobiele weergave /////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .color-menu {
+    flex-direction: column;
+  }
+/* Make the hamburger icon visible in mobile view */
+.hamburger {
+  display: block;
+  font-size: 30px;
+  cursor: pointer;
+  color: #cecfd1;
+}
+
+/* Hide the nav-links by default on mobile */
+.nav-links {
+  list-style: none;
+  display: none; /* Hide menu initially */
+  position: absolute;
+  top: 65px; 
+  left: 320px;
+  width: 40%;
+  background-color: #222;
+  padding: 10px;
+  z-index: 999;
+  box-shadow: 0 4px 8px #6df243;
+}
+
+/* Display the menu when active */
+.nav-links.active {
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;
+  align-items: center;
+}
+
+.hamburger {
+  display: block;
+}
+
+.close-menu {
+  display: none;
+}
+
+.nav-links.active {
+  right: 0; 
+}
+.nav-links.active ~ .close-menu {
+  display: block;
+}
+
+
+.close-menu {
+  display: none; 
+  font-size: 40px;
+  cursor: pointer;
+  color: #cecfd1;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+
+}
+
+.nav-links.active ~ .close-menu {
+  display: block;
+}
+
+.navbar {
+  padding: 10px 15px;
+}
+
+.slogan {
+  margin-left: 50px;  
+  margin-right: 0; 
+  font-size: 35px; 
+}
+
+}
+
+@media (min-width: 768px) {
+  .hamburger, .close-menu {
+    display: none !important;
+  }
+}
+@media (min-width: 1040px) {
+  .hamburger, .close-menu {
+    display: none !important;
+  }
+}
   

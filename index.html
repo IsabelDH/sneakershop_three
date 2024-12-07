@@ -2,15 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webshop</title>
+  <title>Swear</title>
   <link rel="stylesheet" href="shop.css">
 </head>
 <body>
   <!-- Navigatiebalk -->
   <nav class="navbar">
+    <!-- Logo -->
     <div class="logo">
-      <a href="#">Swear</a>
+      <img src="/images/SWEAR_Logo.webp" alt="logo Swear">
+    </div>
+
+    <!-- Hamburger icon for mobile -->
+    <div class="hamburger" id="hamburger">
+        &#9776; 
+    </div>
+
+    <!-- Close icon for mobile menu -->
+    <div class="close-menu" id="close-menu" >
+        &times; 
+    </div>
+
+    <!-- Menu links -->
+  
+    <ul class="nav-links" id="menu">
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Vault</a></li>
+      <li><a href="#">Journal</a></li>
+      <li><a href="#">Sustainability</a></li>
+    </ul>
+</nav>
+  <!-- <nav class="navbar">
+    <div class="logo">
+      <a href="index.html"><img src="/images/SWEAR_Logo.webp" alt="logo Swear"></a>
     </div>
     <ul class="nav-links">
       <li><a href="#">Shop</a></li>
@@ -19,7 +46,7 @@
       <li><a href="#">Journal</a></li>
       <li><a href="#">Sustainability</a></li>
     </ul>
-  </nav>
+  </nav> -->
 
   <!-- Schoenenoverzicht -->
   <section class="product-overview">
@@ -54,6 +81,24 @@
     function goToConfigurator() {
       window.location.href = 'configurator.html';
     }
+
+    const hamburger = document.getElementById('hamburger');
+    const closeMenu = document.getElementById('close-menu');
+    const menu = document.getElementById('menu');
+
+    // Open menu when hamburger is clicked
+    hamburger.addEventListener('click', () => {
+      menu.classList.add('active');  
+      closeMenu.style.display = 'block';  
+      hamburger.style.display = 'none';  
+    });
+
+    // Close menu when close button is clicked
+    closeMenu.addEventListener('click', () => {
+    menu.classList.remove('active');  // Verwijder de actieve klasse om het menu te sluiten
+    closeMenu.style.display = 'none';  // Verberg de sluitknop
+    hamburger.style.display = 'block'; // Toon de hamburger knop weer
+  });
   </script>
 </body>
 </html>
