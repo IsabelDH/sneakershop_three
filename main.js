@@ -4,7 +4,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import gsap from 'gsap';
 import { DRACOLoader } from 'three/examples/jsm/Addons.js';
 import {createOrder} from './api.js';
-import { color } from 'three/webgpu';
+// import { color } from 'three/webgpu';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -29,6 +29,16 @@ camera.position.z = 30;
 //texture ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const textureLoader = new THREE.TextureLoader();
 const texture360 = textureLoader.load('./textures/image.png');
+
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+  const envMap = cubeTextureLoader.load([
+    './textures/px.png', './textures/nx.png',
+    './textures/py.png', './textures/ny.png',
+    './textures/pz.png', './textures/nz.png',
+  ]);
+  scene.environment = envMap;
+  scene.background = envMap;
+
 
 const texture1 = textureLoader.load('./textures/texture_1.png', () =>{
   console.log('texture1 loaded');
@@ -60,6 +70,8 @@ const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
 
 let shoe;
+
+
 loader.load('./models/shoe.glb', (gltf) => {
   console.log('Load')
   shoe = gltf.scene;
@@ -67,7 +79,7 @@ loader.load('./models/shoe.glb', (gltf) => {
   shoe.scale.set(55, 55, 55);
   shoe.rotation.y = Math.PI / 2;
   shoe.updateMatrixWorld(true); // Update de wereldmatrix van de schoen voor de raycaster
-
+  let inside, laces, outside_1, outside_2, outside_3, sole_bottom, sole_top;
   shoe.traverse((child) => {
     if (child.isMesh && child.name === 'laces') {
       console.log(child.name);
@@ -138,6 +150,7 @@ let highlightedPart = null;
 
 //mouse move on a shoe child, highlight that child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('mousemove', (event) => {
+  if (!shoe) return;
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -183,6 +196,7 @@ function resetHighlight(object) {
 
 //mouse click on a shoe child, zoom in on that child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('click', (e) => {
+  if (!shoe) return;
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
@@ -301,7 +315,7 @@ function changeTexture(part, textureName) {
 
 //colorpicker
 // Kleur kiezen via de invoer (hex-code)
-document.getElementById('custom-color-input').addEventListener('input', function() {
+document.getElementById('custom-color-picker').addEventListener('input', function() {
   let customColor = this.value;
   if (isValidHexColor(customColor)) {
     // Gebruik customColor in je 3D-configurator om de kleur van een object te veranderen
@@ -312,9 +326,14 @@ document.getElementById('custom-color-input').addEventListener('input', function
 
 // Kleur kiezen via de kleurkiezer
 document.getElementById('custom-color-picker').addEventListener('input', function() {
-  let customColor = this.value;
-  // Gebruik customColor in je 3D-configurator om de kleur van een object te veranderen
-  console.log("Selected custom color: " + customColor);
+  const customColor = event.target.value;
+
+  if (selectedPart) {
+    changeColor(selectedPart, customColor); // Pas de kleur van het geselecteerde onderdeel aan
+  }
+  // let customColor = this.value;
+  // // Gebruik customColor in je 3D-configurator om de kleur van een object te veranderen
+  // console.log("Selected custom color: " + customColor);
 });
 
 // Functie om te controleren of de ingevoerde hex-kleur geldig is
@@ -418,21 +437,35 @@ document.querySelector('#order-form').addEventListener('submit', async (event) =
   }
 
   // Verzend de order
+  // const orderData = {
+  //   user,
+  //   email,
+  //   address,
+  //   size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
+  //   order: [
+  //     ...Object.keys(currentConfig.colors).map(partName => ({
+  //       name: partName,
+  //       material: currentConfig.material || 'default-material',
+  //       color: currentConfig.colors[partName],
+  //       size: shoeSize || 'default-size',
+  //       quantity: 1,
+  //     })),
+  //   ],
+  // };
   const orderData = {
     user,
     email,
     address,
-    size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
-    order: [
-      ...Object.keys(currentConfig.colors).map(partName => ({
-        name: partName,
-        material: currentConfig.material || 'default-material',
-        color: currentConfig.colors[partName],
-        size: shoeSize || 'default-size',
-        quantity: 1,
-      })),
-    ],
+    size: shoeSize || 'default-size',
+    order: Object.keys(currentConfig.colors).map(partName => ({
+      name: partName,
+      color: currentConfig.colors[partName], // Hier worden de kleuren toegevoegd
+      texture: currentConfig.textures[partName] || 'default-texture',
+      size: shoeSize || 'default-size',
+      quantity: 1,
+    })),
   };
+  
 
   console.log('Preparing to send order data:', orderData);
 
