@@ -65,8 +65,7 @@
             <input type="color" id="custom-color-picker" />
             <img src="/images/color-wheel.png" alt="Color Picker Icon" class="color-picker-icon">
           </div>
-          
-          
+         
         </div>
         <div class="column">
           <h3>Select texture</h3>
@@ -95,8 +94,11 @@
       <input type="text" id="user-address" placeholder="Address" required />
       <!-- Weergeven van geselecteerde kleur en maat -->
       <div id="selected-size">Select shoe size: <span id="size-display">no shoe size selected</span></div>
+      <div id="selected-color">Shoe color: <span id="color-display">No color selected</span></div> 
     
       <input type="hidden" id="user-color-shoe" name="shoe-color" />
+      <input type="hidden" id="user-size" name="shoe-size" />
+      
       <button type="submit">Bestellen</button>
     </div>
   </form>
@@ -145,6 +147,63 @@ sizeSelect.addEventListener('change', (e) => {
   sizeDisplay.textContent = selectedSize; // Display the selected size
   document.getElementById('user-size').value = selectedSize; // Store the size in the hidden input field
 });
+
+
+/////////color
+
+// Array om geselecteerde kleuren per object op te slaan
+// Array om geselecteerde kleuren per object op te slaan
+let selectedColors = [];
+
+// Elementen voor de kleurkeuzes
+const colorOptions = document.querySelectorAll('.color-option');
+const colorDisplay = document.getElementById('color-display'); // Het element om de geselecteerde kleur weer te geven
+const userColorInput = document.getElementById('user-color-shoe'); // Het verborgen invoerveld voor de kleur
+
+// Event listener voor de kleurkeuzes
+colorOptions.forEach(option => {
+  option.addEventListener('click', (e) => {
+    const selectedColor = e.target.getAttribute('data-color'); // Verkrijg de kleur van de data-attribute
+    const objectType = e.target.getAttribute('data-type'); // Verkrijg het objecttype van de data-attribute (bijv. 'shoe')
+
+    // Zorg ervoor dat het objecttype bestaat
+    if (!objectType) {
+      console.error("No object type found for this color selection.");
+      return;
+    }
+
+    // Voeg de geselecteerde kleur toe aan de array als deze nog niet bestaat
+    if (!selectedColors.some(item => item.color === selectedColor && item.object === objectType)) {
+      selectedColors.push({ color: selectedColor, object: objectType });
+    }
+
+    // Werk de weergave van geselecteerde kleuren bij
+    colorDisplay.textContent = selectedColors.map(item => `${item.object}: ${item.color}`).join(', '); // Toon objecten met de kleur gescheiden door een komma
+    
+    // Zet de geselecteerde kleuren als een JSON-string in het verborgen invoerveld
+    userColorInput.value = JSON.stringify(selectedColors); // Hiermee sla je alle geselecteerde kleuren op als een string
+  });
+});
+
+// Kleurkiezer event listener
+const colorPicker = document.getElementById('custom-color-picker');
+
+colorPicker.addEventListener('input', (e) => {
+  const selectedColor = e.target.value; // Haal de geselecteerde kleur op
+  const objectType = 'shoe'; // We nemen aan dat de custom color altijd voor de schoen is
+
+  // Voeg de geselecteerde kleur toe aan de array als deze nog niet bestaat
+  if (!selectedColors.some(item => item.color === selectedColor && item.object === objectType)) {
+    selectedColors.push({ color: selectedColor, object: objectType });
+  }
+
+  // Werk de weergave van geselecteerde kleuren bij
+  colorDisplay.textContent = selectedColors.map(item => `${item.object}: ${item.color}`).join(', '); // Toon objecten met de kleur gescheiden door een komma
+  
+  // Zet de geselecteerde kleuren als een JSON-string in het verborgen invoerveld
+  userColorInput.value = JSON.stringify(selectedColors); // Hiermee sla je alle geselecteerde kleuren op als een string
+});
+
 
 
   </script>

@@ -26,6 +26,40 @@ scene.add(light);
 //camera ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 camera.position.z = 30;
 
+//linked parts ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Lijst van de verschillende onderdelen van de schoen
+const linkedParts = {
+  laces: {
+    name: 'Laces', // Naam van de veters
+    type: 'laces', // Specifieer dat dit de veters zijn
+  },
+  outside_1: {
+    name: 'Outside 1',
+    type: 'outside', // Specifieer dat dit de buitenkant is
+  },
+  outside_2: {
+    name: 'Outside 2',
+    type: 'outside',
+  },
+  outside_3: {
+    name: 'Outside 3',
+    type: 'outside',
+  },
+  inside: {
+    name: 'Inside',
+    type: 'inside',
+  },
+  sole_top: {
+    name: 'Sole Top',
+    type: 'sole',
+  },
+  sole_bottom: {
+    name: 'Sole Bottom',
+    type: 'sole',
+  },
+};
+
+
 //texture ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const textureLoader = new THREE.TextureLoader();
 const texture360 = textureLoader.load('./textures/image.png');
@@ -290,10 +324,22 @@ function changeColor(part, color) {
   part.material.color.set(color);
   part.material.needsUpdate = true;
 
+  // Check if there are linked parts and update those as well
+  if (linkedParts[part.name] && Array.isArray(linkedParts[part.name].linked)) {
+    linkedParts[part.name].linked.forEach((linkedPartName) => {
+      const linkedPart = shoe.getObjectByName(linkedPartName);
+      if (linkedPart) {
+        linkedPart.material.color.set(color);  // Change the color of the linked part
+        linkedPart.material.needsUpdate = true;
+      }
+    });
+  }
+
   if (currentConfig) {
     currentConfig.colors[part.name] = color;
   }
 }
+
 
 //change texture of a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function changeTexture(part, textureName) {
@@ -309,6 +355,18 @@ function changeTexture(part, textureName) {
   if (texture) {
     part.material.map = texture;
     part.material.needsUpdate = true;
+
+    // Controleer ook of er gekoppelde onderdelen zijn en pas die aan
+    if (linkedParts[part.name]) {
+      linkedParts[part.name].forEach((linkedPartName) => {
+        const linkedPart = shoe.getObjectByName(linkedPartName);
+        if (linkedPart) {
+          linkedPart.material.map = texture;  // Verander ook de textuur van het gekoppelde onderdeel
+          linkedPart.material.needsUpdate = true;
+        }
+      });
+    }
+
     currentConfig.textures[part.name] = textureName;
   }
 }
@@ -348,18 +406,28 @@ function attachCharmToShoe(charm, position) {
   charm.visible = true;
 
   const anchorPoints = {
-      top: new THREE.Vector3(-1, 3.5, 3.5),
-      side: new THREE.Vector3(0.75, 2, 3),
-      front: new THREE.Vector3(0, -2, 5),
+    top: new THREE.Vector3(-1, 3.5, 3.5),
+    side: new THREE.Vector3(0.75, 2, 3),
+    front: new THREE.Vector3(0, -2, 5),
   };
 
   const targetPosition = anchorPoints[position];
   if (targetPosition) {
-      charm.position.copy(targetPosition);
-      currentConfig.charms.push({ name: charm.name, position });
+    charm.position.copy(targetPosition);
+    currentConfig.charms.push({ name: charm.name, position });
+
+    // Koppel deze charm aan gerelateerde onderdelen
+    if (linkedParts[position]) {
+      linkedParts[position].forEach((linkedPartName) => {
+        const linkedPart = shoe.getObjectByName(linkedPartName);
+        if (linkedPart) {
+          // Zorg ervoor dat als een charm aan een onderdeel wordt toegevoegd, ook de gerelateerde delen zichtbaar blijven
+          linkedPart.add(charm);  // Voeg de charm toe aan het onderdeel
+        }
+      });
+    }
   }
 }
-
 document.querySelectorAll('.charms-menu button').forEach((button) => {
   button.addEventListener('click', () => {
     const charmName = button.dataset.charm;
@@ -408,6 +476,7 @@ let currentConfig = {
   textures: {}, // Houd textuurinstellingen bij
   charms: [], // Houd charms bij
   size: null, // Houd de maat bij
+  linkedParts: linkedParts, 
 };
 
 //create order /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -461,9 +530,11 @@ document.querySelector('#order-form').addEventListener('submit', async (event) =
       name: partName,
       color: currentConfig.colors[partName], // Hier worden de kleuren toegevoegd
       texture: currentConfig.textures[partName] || 'default-texture',
+      charms: currentConfig.charms,
       size: shoeSize || 'default-size',
       quantity: 1,
     })),
+ 
   };
   
 
