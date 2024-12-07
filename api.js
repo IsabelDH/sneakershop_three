@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://sneakershop-6lmk.onrender.com/api/orders'; // Pas aan met jouw API-basis-URL
+const API_BASE_URL = 'https://sneakershop-6lmk.onrender.com/api/v1/orders'; // Pas aan met jouw API-basis-URL
 
 export async function createOrder(orderData) {
     try {
