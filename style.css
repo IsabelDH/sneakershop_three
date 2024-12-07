@@ -26,7 +26,7 @@ body {
   background-color: #202020;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   z-index: 20000; 
-  border-color: #6df243;
+  box-shadow: 0 4px 8px #6df243;
   font-size: 32px;
   
 }
@@ -43,8 +43,8 @@ img{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Transparante achtergrond om het te dimmen */
-  z-index: 9999; /* Zorg ervoor dat het formulier boven alles ligt */
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 9999; 
   justify-content: center;
   align-items: center;
 }
@@ -81,7 +81,7 @@ img{
 /* Sluitknop voor het formulier */
 .close-form {
   position: absolute;
-  top: 270px;
+  top: 260px;
   right: 240px;
   font-size: 30px;
   color: #0b0000;
@@ -90,7 +90,7 @@ img{
 }
 
 .close-form:hover {
-  color: #f44336; /* Rood wanneer je met de muis erover heen gaat */
+  color: #f44336; 
 }
 
 
@@ -224,6 +224,11 @@ h3 {
   transition: border-color 0.3s ease;
 }
 
+#selected-size{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 
 .color-menu button:hover {
   background: #255215;
@@ -309,9 +314,22 @@ h3 {
   background-color: #218838;
 }
 
+.titleOrder{
+  margin-right: 20px;
+}
+
 
 /* Mobiele weergave /////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 @media (max-width: 768px) {
+  .close-form {
+    position: absolute;
+    top: 260px;
+    right: 76px;
+    font-size: 30px;
+    color: #0b0000;
+    cursor: pointer;
+    z-index: 1001 !important;
+  }
   .nav-links {
     display: none;
   }
@@ -448,5 +466,15 @@ h3 {
     color: #fff;
     font-size: 1.2rem;
     width: 40%; 
+  }
+
+  .close-form {
+    position: absolute;
+    top: 260px;
+    right: 680px;
+    font-size: 30px;
+    color: #0b0000;
+    cursor: pointer;
+    z-index: 1001 !important;
   }
 }

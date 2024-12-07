@@ -36,7 +36,7 @@
     </ul>
 </nav>
 
-  <div class="slogan">Pick and Change!</div>
+  <div class="slogan">Click and Change!</div>
 
   <div class="color-menu fixed-bottom">
     <div class="menu-section">
@@ -56,24 +56,24 @@
         </div>
 
         <div class="column">
-          <h3>Select Color</h3>
-          <a href="#" data-color="darkcyan"></a>
-          <a href="#" data-color="yellow"></a>
-          <a href="#" data-color="darkred"></a>
-          <a href="#" data-color="black"></a>
+          <h3>Select color</h3>
+          <a href="#" class="color-option" data-color="darkcyan" data-type="shoe"></a>
+          <a href="#" class="color-option" data-color="yellow" data-type="shoe"></a>
+          <a href="#" class="color-option" data-color="darkred" data-type="shoe"></a>
+          <a href="#" class="color-option" data-color="black" data-type="shoe"></a>
           <input type="color" id="custom-color-picker" />
         </div>
         <div class="column">
-          <h3>Select Texture</h3>
+          <h3>Select texture</h3>
           <img src="/textures/texture_1.png" class="texture-option" data-texture="texture1">
           <img src="/textures/texture_2.png" class="texture-option" data-texture="texture2">
         </div>
         <div class="column">
           <h3>Select charms</h3>
           <div class="charms-menu">
-            <button data-charm="charm1">Add Charm 1</button>
-            <button data-charm="charm2">Add Charm 2</button>
-            <button class="remove-charm">Remove Charm</button>
+            <button data-charm="charm1">Add charm 1</button>
+            <button data-charm="charm2">Add charm 2</button>
+            <button class="remove-charm">Remove charm</button>
           </div>
       </div>
     </div>
@@ -82,12 +82,16 @@
 
   <form id="order-form" class="order-form">
     <div class="order-form-container">
-      <h2>Vul je gegevens in om je bestelling te plaatsen</h2>
+      <h2 class="titleOrder">Enter your details to place your order</h2>
       <!-- Sluitknop voor het formulier -->
       <div class="close-form" id="close-form">&times;</div>
-      <input type="text" id="user-name" placeholder="Naam" required />
+      <input type="text" id="user-name" placeholder="Name" required />
       <input type="email" id="user-email" placeholder="E-mail" required />
-      <input type="text" id="user-address" placeholder="Adres" required />
+      <input type="text" id="user-address" placeholder="Address" required />
+      <!-- Weergeven van geselecteerde kleur en maat -->
+      <div id="selected-size">Select shoe size: <span id="size-display">no shoe size selected</span></div>
+    
+      <input type="hidden" id="user-color-shoe" name="shoe-color" />
       <button type="submit">Bestellen</button>
     </div>
   </form>
@@ -123,6 +127,21 @@ closeFormButton.addEventListener('click', () => {
     closeMenu.style.display = 'none';  // Verberg de sluitknop
     hamburger.style.display = 'block'; // Toon de hamburger knop weer
   });
+
+  //////////////bestelling het zien van schoenmaat
+  // Get the elements for the size and color selectors
+const sizeSelect = document.getElementById('shoe-size');
+// Elements to display selected size and color
+const sizeDisplay = document.getElementById('size-display');
+
+// Update size display when user selects a size
+sizeSelect.addEventListener('change', (e) => {
+  const selectedSize = e.target.value;
+  sizeDisplay.textContent = selectedSize; // Display the selected size
+  document.getElementById('user-size').value = selectedSize; // Store the size in the hidden input field
+});
+
+
   </script>
   <script type="module" src="main.js"></script>
 </body>
