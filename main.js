@@ -203,6 +203,7 @@ window.addEventListener('click', (e) => {
     changeColorOnClick(intersectedPart);
     zoomToPart(intersectedPart);
     openColorMenu(intersectedPart);
+    selectedPart = intersectedPart;
   }
 });
 
@@ -261,6 +262,12 @@ function openColorMenu(part) {
       changeTexture(selectedPart, img.dataset.texture);
     });
   });
+
+   // Custom color picker
+   const colorPicker = document.getElementById('custom-color-picker');
+   colorPicker.addEventListener('input', (e) => {
+     changeColor(selectedPart, e.target.value); // Change color based on custom picker input
+   });
 }
 
 
