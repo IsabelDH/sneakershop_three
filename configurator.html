@@ -39,43 +39,52 @@
   <div class="slogan">Pick and Change!</div>
 
   <div class="color-menu fixed-bottom">
-    
-
     <div class="menu-section">
-      <h3>Select shoe size</h3>
-        <select id="shoe-size" class="size-menu">
-        <option value="38">38</option>
-        <option value="39">39</option>
-        <option value="40">40</option>
-        <option value="41">41</option>
-        <option value="42">42</option>
-        <option value="43">43</option>
-        <option value="44">44</option>
-        <option value="45">45</option>
-      </select>
+      <div class="column-container">
+        <div class="column">
+          <h3>Select shoe size</h3>
+            <select id="shoe-size" class="size-menu">
+            <option value="38">38</option>
+            <option value="39">39</option>
+            <option value="40">40</option>
+            <option value="41">41</option>
+            <option value="42">42</option>
+            <option value="43">43</option>
+            <option value="44">44</option>
+            <option value="45">45</option>
+          </select>
+        </div>
 
-      <h3>Select Color</h3>
-      <a href="#" data-color="green"></a>
-      <a href="#" data-color="yellow"></a>
-      <a href="#" data-color="red"></a>
-      <a href="#" data-color="black"></a>
-
-      <h3>Select Texture</h3>
-      <img src="/textures/texture_1.png" class="texture-option" data-texture="texture1">
-      <img src="/textures/texture_2.png" class="texture-option" data-texture="texture2">
-
-      <h3>Select charms</h3>
-      <div class="charms-menu">
-        <button data-charm="charm1">Add Charm 1</button>
-        <button data-charm="charm2">Add Charm 2</button>
-        <button class="remove-charm">Remove Charm</button>
+        <div class="column">
+          <h3>Select Color</h3>
+          <a href="#" data-color="darkcyan"></a>
+          <a href="#" data-color="yellow"></a>
+          <a href="#" data-color="darkred"></a>
+          <a href="#" data-color="black"></a>
+          <input type="color" id="custom-color-picker" />
+        </div>
+        <div class="column">
+          <h3>Select Texture</h3>
+          <img src="/textures/texture_1.png" class="texture-option" data-texture="texture1">
+          <img src="/textures/texture_2.png" class="texture-option" data-texture="texture2">
+        </div>
+        <div class="column">
+          <h3>Select charms</h3>
+          <div class="charms-menu">
+            <button data-charm="charm1">Add Charm 1</button>
+            <button data-charm="charm2">Add Charm 2</button>
+            <button class="remove-charm">Remove Charm</button>
+          </div>
       </div>
     </div>
   </div>
+</div>
 
   <form id="order-form" class="order-form">
     <div class="order-form-container">
       <h2>Vul je gegevens in om je bestelling te plaatsen</h2>
+      <!-- Sluitknop voor het formulier -->
+      <div class="close-form" id="close-form">&times;</div>
       <input type="text" id="user-name" placeholder="Naam" required />
       <input type="email" id="user-email" placeholder="E-mail" required />
       <input type="text" id="user-address" placeholder="Adres" required />
@@ -83,9 +92,23 @@
     </div>
   </form>
   <script>
+    const orderButton = document.querySelector('.order');
+    const orderForm = document.getElementById('order-form');
     const hamburger = document.getElementById('hamburger');
     const closeMenu = document.getElementById('close-menu');
     const menu = document.getElementById('menu');
+    const closeFormButton = document.getElementById('close-form');
+
+    // Toon het formulier wanneer de "Order" knop wordt geklikt
+    orderButton.addEventListener('click', () => {
+      orderForm.style.display = 'flex';
+      closeMenu.style.display = 'flex';
+    });
+    // Sluit het formulier wanneer de 'X' wordt geklikt
+closeFormButton.addEventListener('click', () => {
+  orderForm.style.display = 'none'; // Verberg het formulier
+});
+
 
     // Open menu when hamburger is clicked
     hamburger.addEventListener('click', () => {

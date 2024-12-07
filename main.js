@@ -180,6 +180,7 @@ function resetHighlight(object) {
   object.material.emissiveIntensity = 0; 
 }
 
+
 //mouse click on a shoe child, zoom in on that child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 window.addEventListener('click', (e) => {
   mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
@@ -199,10 +200,17 @@ window.addEventListener('click', (e) => {
 
   if (intersects.length > 0) {
     const intersectedPart = intersects[0].object;
+    changeColorOnClick(intersectedPart);
     zoomToPart(intersectedPart);
     openColorMenu(intersectedPart);
   }
 });
+
+// Functie om de kleur van het aangeklikte object te veranderen
+function changeColorOnClick(part) {
+  part.material.color.set(0xcccccc); 
+  part.material.needsUpdate = true;
+}
 
 //zoom in on a shoe child /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function zoomToPart(part) {
@@ -211,8 +219,8 @@ function zoomToPart(part) {
 
   gsap.to(camera.position, {
     x: center.x,
-    y: center.y + 5,
-    z: center.z + 10,
+    y: center.y + 3,
+    z: center.z + 18,
     duration: 1,
   });
 
@@ -283,6 +291,31 @@ function changeTexture(part, textureName) {
     currentConfig.textures[part.name] = textureName;
   }
 }
+
+//colorpicker
+// Kleur kiezen via de invoer (hex-code)
+document.getElementById('custom-color-input').addEventListener('input', function() {
+  let customColor = this.value;
+  if (isValidHexColor(customColor)) {
+    // Gebruik customColor in je 3D-configurator om de kleur van een object te veranderen
+    console.log("Selected custom color: " + customColor);
+    // Je kunt de 3D-sneaker kleur hier aanpassen
+  }
+});
+
+// Kleur kiezen via de kleurkiezer
+document.getElementById('custom-color-picker').addEventListener('input', function() {
+  let customColor = this.value;
+  // Gebruik customColor in je 3D-configurator om de kleur van een object te veranderen
+  console.log("Selected custom color: " + customColor);
+});
+
+// Functie om te controleren of de ingevoerde hex-kleur geldig is
+function isValidHexColor(color) {
+  const hexColorPattern = /^#([0-9A-Fa-f]{3}){1,2}$/;
+  return hexColorPattern.test(color);
+}
+
 
 //change charm /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function attachCharmToShoe(charm, position) {

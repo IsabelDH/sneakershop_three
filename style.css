@@ -78,6 +78,21 @@ img{
 .order-form button:hover {
   background-color: #218838;
 }
+/* Sluitknop voor het formulier */
+.close-form {
+  position: absolute;
+  top: 270px;
+  right: 240px;
+  font-size: 30px;
+  color: #0b0000;
+  cursor: pointer;
+  z-index: 1001 !important;
+}
+
+.close-form:hover {
+  color: #f44336; /* Rood wanneer je met de muis erover heen gaat */
+}
+
 
 /* Stijl voor de 'Order' knop */
 .order {
@@ -112,6 +127,33 @@ img{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.column-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto; 
+  
+}
+
+/* Stijl voor de kolommen */
+.column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+h3 {
+  text-align: center; 
+  color: #fff;
+  font-size: 1.2rem;
+  width: 40%; 
+}
+
+.size-menu{
+  margin-left: 10px;
+  padding: 10px;
+  font-size: 15px;
 }
 
 .color-menu a,
@@ -172,21 +214,33 @@ img{
   transition: background-color 0.3s ease;
 }
 
+#custom-color-picker{
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+
 .color-menu button:hover {
-  background: #57c72d;
+  background: #255215;
+  color: white;
 }
 
 /* Stijl voor kleuren */
-[data-color="red"] {
-  background-color: red;
+[data-color="darkred"] {
+  background-color: darkred;
 }
 
 [data-color="yellow"] {
   background-color: yellow;
 }
 
-[data-color="green"] {
-  background-color: green;
+[data-color="darkcyan"] {
+  background-color: darkcyan;
 }
 
 [data-color="black"] {
@@ -194,43 +248,42 @@ img{
 }
 
   /* Navigatiebalk */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222;
+  color: white;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 8px #6df243;
+}
+.navbar .logo a {
+  font-size: 1.5rem;
+  color: #fff;
+  text-decoration: none;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
 
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #222;
-    color: white;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 4px 8px #6df243;
-  }
-   .navbar .logo a {
-    font-size: 1.5rem;
-    color: #fff;
-    text-decoration: none;
-  }
-  .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-  }
-   
-  .nav-links a {
-    text-decoration: none;
-    color: #fff;
-    font-size: 1rem;
-    padding: 5px 10px;
-    transition: background 0.3s ease;
-  }
-  
-  .nav-links a:hover {
-    color: #6df243;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+.nav-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+  padding: 5px 10px;
+  transition: background 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #6df243;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 .cart {
   position: relative;
@@ -249,6 +302,7 @@ img{
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.3s ease;
+  z-index: 1000;
 }
 
 .order:hover {
@@ -345,9 +399,54 @@ img{
   .hamburger, .close-menu {
     display: none !important;
   }
+  .column-container {
+    grid-template-columns: 1fr; /* Bij kleinere schermen worden de kolommen gestapeld */
+  }
+  .column-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto; 
+    
+  }
+  
+  /* Stijl voor de kolommen */
+  .column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  h3 {
+    text-align: center; 
+    color: #fff;
+    font-size: 1.2rem;
+    width: 40%; 
+  }
 }
 @media (min-width: 1040px) {
   .hamburger, .close-menu {
     display: none !important;
+  }
+  .column-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto; 
+    
+  }
+  
+  /* Stijl voor de kolommen */
+  .column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  h3 {
+    text-align: center; 
+    color: #fff;
+    font-size: 1.2rem;
+    width: 40%; 
   }
 }
