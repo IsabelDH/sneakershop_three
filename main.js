@@ -385,6 +385,7 @@ document.querySelector('#order-form').addEventListener('submit', async (event) =
     size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
     order: [
       ...Object.keys(currentConfig.colors).map(partName => ({
+        name: partName,
         material: currentConfig.material || 'default-material',
         color: currentConfig.colors[partName],
         size: shoeSize || 'default-size',
