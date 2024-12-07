@@ -44,6 +44,9 @@
         <div class="column">
           <h3>Select shoe size</h3>
             <select id="shoe-size" class="size-menu">
+            <option value="38">35</option>
+            <option value="38">36</option>
+            <option value="38">37</option>
             <option value="38">38</option>
             <option value="39">39</option>
             <option value="40">40</option>
@@ -99,7 +102,7 @@
       <input type="hidden" id="user-color-shoe" name="shoe-color" />
       <input type="hidden" id="user-size" name="shoe-size" />
       
-      <button type="submit">Bestellen</button>
+      <button type="submit">Order</button>
     </div>
   </form>
   <script>
@@ -187,21 +190,26 @@ colorOptions.forEach(option => {
 
 // Kleurkiezer event listener
 const colorPicker = document.getElementById('custom-color-picker');
-
 colorPicker.addEventListener('input', (e) => {
   const selectedColor = e.target.value; // Haal de geselecteerde kleur op
   const objectType = 'shoe'; // We nemen aan dat de custom color altijd voor de schoen is
 
-  // Voeg de geselecteerde kleur toe aan de array als deze nog niet bestaat
-  if (!selectedColors.some(item => item.color === selectedColor && item.object === objectType)) {
+  // Zoek naar het object in de geselecteerde kleuren
+  let objectColor = selectedColors.find(item => item.object === objectType);
+
+  if (objectColor) {
+    // Als het object al bestaat, werk dan de kleur bij
+    objectColor.color = selectedColor;
+  } else {
+    // Voeg de nieuwe kleur toe voor de schoenen
     selectedColors.push({ color: selectedColor, object: objectType });
   }
 
   // Werk de weergave van geselecteerde kleuren bij
-  colorDisplay.textContent = selectedColors.map(item => `${item.object}: ${item.color}`).join(', '); // Toon objecten met de kleur gescheiden door een komma
-  
+  colorDisplay.textContent = selectedColors.map(item => `${item.object}: ${item.color}`).join(', ');
+
   // Zet de geselecteerde kleuren als een JSON-string in het verborgen invoerveld
-  userColorInput.value = JSON.stringify(selectedColors); // Hiermee sla je alle geselecteerde kleuren op als een string
+  userColorInput.value = JSON.stringify(selectedColors); 
 });
 
 
