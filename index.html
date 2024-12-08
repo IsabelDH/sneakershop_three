@@ -89,15 +89,13 @@
     function goToConfigurator() {
       window.location.href = 'configurator.html';
     }
-    let selectedShoe = localStorage.getItem('selectedShoe');
-console.log(`Selected shoe: ${selectedShoe}`);
 
-    // let selectedShoe = '';
+    let selectedShoe = '';
 
     // Functie om geselecteerde schoen op te slaan
-//     function selectShoe(shoeName) {
-//     localStorage.setItem('selectedShoe', shoeName);
-// }
+    function selectShoe(shoeName) {
+    localStorage.setItem('selectedShoe', shoeName);
+}
     const hamburger = document.getElementById('hamburger');
     const closeMenu = document.getElementById('close-menu');
     const menu = document.getElementById('menu');
