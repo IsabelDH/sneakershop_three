@@ -506,36 +506,37 @@ document.querySelector('#order-form').addEventListener('submit', async (event) =
   }
 
   // Verzend de order
-  // const orderData = {
-  //   user,
-  //   email,
-  //   address,
-  //   size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
-  //   order: [
-  //     ...Object.keys(currentConfig.colors).map(partName => ({
-  //       name: partName,
-  //       material: currentConfig.material || 'default-material',
-  //       color: currentConfig.colors[partName],
-  //       size: shoeSize || 'default-size',
-  //       quantity: 1,
-  //     })),
-  //   ],
-  // };
   const orderData = {
     user,
     email,
     address,
-    size: shoeSize || 'default-size',
-    order: Object.keys(currentConfig.colors).map(partName => ({
-      name: partName,
-      color: currentConfig.colors[partName], // Hier worden de kleuren toegevoegd
-      texture: currentConfig.textures[partName] || 'default-texture',
-      charms: currentConfig.charms,
-      size: shoeSize || 'default-size',
-      quantity: 1,
-    })),
- 
+    size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
+    order: [
+      ...Object.keys(currentConfig.colors).map(partName => ({
+        shoename: "sneaker model 1",
+        name: partName,
+        material: currentConfig.material || 'default-material',
+        color: currentConfig.colors[partName],
+        size: shoeSize || 'default-size',
+        quantity: 1,
+      })),
+    ],
   };
+  // const orderData = {
+  //   user,
+  //   email,
+  //   address,
+  //   size: shoeSize || 'default-size',
+  //   order: Object.keys(currentConfig.colors).map(partName => ({
+  //     name: partName,
+  //     color: currentConfig.colors[partName], // Hier worden de kleuren toegevoegd
+  //     texture: currentConfig.textures[partName] || 'default-texture',
+  //     charms: currentConfig.charms,
+  //     size: shoeSize || 'default-size',
+  //     quantity: 1,
+  //   })),
+ 
+  // };
   
 
   console.log('Preparing to send order data:', orderData);
