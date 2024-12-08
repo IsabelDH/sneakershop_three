@@ -1,5 +1,5 @@
 {
   "routes": [
-    { "src": "/configurator.html", "dest": "/configurator.html" }
+    { "src": "/configurator.html", "dest": "./configurator.html" }
   ]
 }
