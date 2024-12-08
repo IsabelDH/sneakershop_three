@@ -4,8 +4,8 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        index: 'public/index.html',
-        configurator: 'public/configurator.html',
+        index: 'index.html',  // index.html bevindt zich in de root van je project
+        configurator: 'configurator.html',  // configurator.html ook in de root van je project
       },
     },
   },
