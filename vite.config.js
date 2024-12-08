@@ -2,11 +2,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
-    outDir: 'dist',  // Zorg ervoor dat de output naar de dist-map gaat
     rollupOptions: {
       input: {
-        index: 'index.html',
-        configurator: 'configurator.html',  // Als je configurator.html hebt
+        index: 'index.html',  // index.html is nu in de root
+        configurator: 'configurator.html',  // configurator.html is ook in de root
       },
     },
   },
