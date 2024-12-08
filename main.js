@@ -492,6 +492,12 @@ orderButton.addEventListener('click', (event) => {
   orderForm.style.display = 'flex';
 });
 
+let selectedShoe = localStorage.getItem('selectedShoe');
+
+// Gebruik selectedShoe nu in je formulierverwerking
+console.log(`Selected shoe: ${selectedShoe}`);
+
+
 // Verzend de order wanneer het formulier wordt ingediend
 document.querySelector('#order-form').addEventListener('submit', async (event) => {
   event.preventDefault(); // Voorkom dat de pagina opnieuw laadt
@@ -500,14 +506,26 @@ document.querySelector('#order-form').addEventListener('submit', async (event) =
   const email = document.querySelector('#user-email').value;
   const address = document.querySelector('#user-address').value;
 
+  const nameOrder = selectedShoe || 'default shoe model'; // Als er geen schoen is geselecteerd, gebruik een standaardwaarde
+
   if (!user || !email || !address) {
     alert('Vul alstublieft alle velden in!');
     return;
   }
 
+  if (!currentConfig || !currentConfig.colors || !currentConfig.textures || !currentConfig.charms) {
+    alert('Er is een probleem met de configuratie van de schoen.');
+    return;
+  }
+
+  const charm = currentConfig.charms && typeof currentConfig.charms === 'object' ? JSON.stringify(currentConfig.charms) : currentConfig.charms || 'no-charm';
+
+
+
   // Verzend de order
   const orderData = {
     user,
+    nameOrder,
     email,
     address,
     size: shoeSize || 'default-size',  // Als de schoenmaat niet is geselecteerd, gebruik een standaardwaarde
@@ -518,10 +536,12 @@ document.querySelector('#order-form').addEventListener('submit', async (event) =
         material: currentConfig.material || 'default-material',
         color: currentConfig.colors[partName],
         size: shoeSize || 'default-size',
+        charm: charm,
         quantity: 1,
       })),
     ],
   };
+  
   // const orderData = {
   //   user,
   //   email,

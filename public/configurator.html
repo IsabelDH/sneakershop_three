@@ -97,7 +97,7 @@
       <input type="text" id="user-address" placeholder="Address" required />
       <!-- Weergeven van geselecteerde kleur en maat -->
       <div id="selected-size">Select shoe size: <span id="size-display">no shoe size selected</span></div>
-      <div id="selected-color">Shoe color: <span id="color-display">No color selected</span></div> 
+      <div id="selected-color">Shoe color: <span id="color-display">No color selected</span></div>
     
       <input type="hidden" id="user-color-shoe" name="shoe-color" />
       <input type="hidden" id="user-size" name="shoe-size" />
@@ -212,6 +212,12 @@ colorPicker.addEventListener('input', (e) => {
   userColorInput.value = JSON.stringify(selectedColors); 
 });
 
+
+let selectedShoe = localStorage.getItem('selectedShoe');
+
+
+// Nu kun je selectedShoe gebruiken in de order
+console.log(`Selected shoe: ${selectedShoe}`);
 
 
   </script>
