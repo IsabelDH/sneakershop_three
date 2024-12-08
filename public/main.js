@@ -106,7 +106,7 @@ loader.setDRACOLoader(dracoLoader);
 let shoe;
 
 
-loader.load('./models/shoe.glb', (gltf) => {
+loader.load('/models/shoe.glb', (gltf) => {
   console.log('Load')
   shoe = gltf.scene;
   scene.add(shoe);
