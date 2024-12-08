@@ -62,19 +62,19 @@ const linkedParts = {
 
 //texture ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const textureLoader = new THREE.TextureLoader();
-const texture360 = textureLoader.load('./textures/image.png');
+const texture360 = textureLoader.load('/textures/image.png');
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
   const envMap = cubeTextureLoader.load([
-    './textures/px.png', './textures/nx.png',
-    './textures/py.png', './textures/ny.png',
-    './textures/pz.png', './textures/nz.png',
+    '/textures/px.png', '/textures/nx.png',
+    '/textures/py.png', '/textures/ny.png',
+    '/textures/pz.png', '/textures/nz.png',
   ]);
   scene.environment = envMap;
   scene.background = envMap;
 
 
-const texture1 = textureLoader.load('./textures/texture_1.png', () =>{
+const texture1 = textureLoader.load('/textures/texture_1.png', () =>{
   console.log('texture1 loaded');
   texture1.wrapS = THREE.RepeatWrapping;
   texture1.wrapT = THREE.RepeatWrapping;
@@ -82,7 +82,7 @@ const texture1 = textureLoader.load('./textures/texture_1.png', () =>{
 }, undefined, (error) => {
   console.error(error);
 });
-const texture2 = textureLoader.load('./textures/texture_2.png', () =>{
+const texture2 = textureLoader.load('/textures/texture_2.png', () =>{
   console.log('texture2 loaded');
   texture2.wrapS = THREE.RepeatWrapping;
   texture2.wrapT = THREE.RepeatWrapping;
@@ -91,7 +91,7 @@ const texture2 = textureLoader.load('./textures/texture_2.png', () =>{
 
 //Draco loader /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath('./draco/');
+dracoLoader.setDecoderPath('/draco/');
 
 //background /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const sphereGeometry = new THREE.SphereGeometry(40, 50, 30);
@@ -106,7 +106,7 @@ loader.setDRACOLoader(dracoLoader);
 let shoe;
 
 
-loader.load('./models/shoe.glb', (gltf) => {
+loader.load('/models/shoe.glb', (gltf) => {
   console.log('Load')
   shoe = gltf.scene;
   scene.add(shoe);
@@ -159,7 +159,7 @@ let charms = [];
 let charm1, charm2;
 const charmLoader = new GLTFLoader();
 
-charmLoader.load('./models/foodie_charm_pizza/charm1.gltf', (gltf) => {
+charmLoader.load('/models/foodie_charm_pizza/charm1.gltf', (gltf) => {
   charm1 = gltf.scene;
   charm1.scale.set(1,1,1);
   charm1.visible = false;
@@ -167,7 +167,7 @@ charmLoader.load('./models/foodie_charm_pizza/charm1.gltf', (gltf) => {
   charms.push(charm1);
 });
 
-charmLoader.load('./models/auspicious_charm/charm2.gltf', (gltf) => {
+charmLoader.load('/models/auspicious_charm/charm2.gltf', (gltf) => {
   charm2 = gltf.scene;
   charm2.scale.set(0.005,0.005,0.005);
   charm2.visible = false;
