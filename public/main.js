@@ -3,7 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import gsap from 'gsap';
 import { DRACOLoader } from 'three/examples/jsm/Addons.js';
-import {createOrder} from './api.js';
+import {createOrder} from '../api.js';
 // import { color } from 'three/webgpu';
 
 const scene = new THREE.Scene();
