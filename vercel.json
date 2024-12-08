@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/configurator",
-      "dest": "/configurator.html"
+      "dest": "/pages/configurator.html"
     }
   ]
 }
