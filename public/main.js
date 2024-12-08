@@ -1,8 +1,8 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import gsap from 'gsap';
-import { DRACOLoader } from 'three/examples/jsm/Addons.js';
+import * as THREE from './node_modules/three';
+import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import gsap from './node_modules/gsap';
+import { DRACOLoader } from './node_modules/three/examples/jsm/Addons.js';
 import {createOrder} from './api.js';
 
 const scene = new THREE.Scene();
