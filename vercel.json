@@ -1,6 +1,12 @@
 {
-  "rewrites": [
-    { "source": "/configurator", "destination": "/configurator.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "routes": [
+    {
+      "src": "/configurator",
+      "dest": "/configurator.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
